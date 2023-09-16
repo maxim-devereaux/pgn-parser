@@ -21,8 +21,8 @@
         if (move) m.move = move;
         if (nags && nags.length) m.nags = nags;
         if (ravs && ravs.length) m.ravs = ravs;
-        if (comments) m.comments = comments;
-        if (comments_pre) m.comments_pre = comments_pre;
+        if (comments && comments.length) m.comments = comments;
+        if (comments_pre && comments_pre.length) m.comments_pre = comments_pre;
         return m;
     }
     function make_rav(moves) {
@@ -31,13 +31,13 @@
         };
     }
     function make_game(c0, hs, c1, m, r) {
-        return {
-            comments_pre_head: c0,
-            headers: hs, 
-            comments_pre: c1,
-            moves: m || [],
-            result: r
-        };
+        var g = {};
+        if (c0) g.comments_pre = c0;
+        g.headers = hs;
+        if (c1) g.comments = c1;
+        g.moves = m || [];
+        g.result = r;
+        return g;
     }
 }
 
