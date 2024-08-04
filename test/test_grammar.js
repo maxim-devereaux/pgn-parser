@@ -51,7 +51,7 @@ describe('grammar', () => {
     });
 
     it('should allow NAG', () => {
-        const [result] = parser.parse('1. f3 $2 e5 $1 2. g4 $4 $15 Qh4#\n0-1');
+        const [result] = parser.parse('1. f3 $0 $2 e5 $1 2. g4 $4 $15 Qh4#\n0-1');
         result.moves.should.have.lengthOf(4);
     });
     
