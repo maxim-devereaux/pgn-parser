@@ -54,8 +54,11 @@ game =
     whitespace* {return make_game(c0, h, c1, mr[0], mr[1])}
 
 EOF = !.
+escape = "\\"
+unescaped = [^"\\]
 double_quote = '"'
-string = double_quote str:[^"]* double_quote {return str.join('')}
+char = unescaped / escape sequence:( '"' / "\\" ) { return sequence; }
+string = double_quote str:char* double_quote {return str.join('')}
 integer = a:[1-9] b:[0-9]* {return parseInt(a+b.join(''), 10)}
 symbol = chars:[A-Za-z0-9_-]+ {return chars.join('')}
 blank = ' '
