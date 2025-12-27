@@ -30,20 +30,21 @@
             moves
         };
     }
-    function make_game(c0, hs, c1, m, r) {
+    function make_game(c0, hs, c1, m, r, raw) {
         var g = {};
         if (c0) g.comments_pre = c0;
         g.headers = hs;
         if (c1) g.comments = c1;
         g.moves = m || [];
         g.result = r;
+        g.rawdata = raw;
         return g;
     }
 }
 
 start = gs:(game newline*)* EOF {return gs.map(function(g) { return g[0]})}
 
-game = 
+game = gm:
     whitespace*
     c0:comments?
     whitespace*
@@ -51,7 +52,7 @@ game =
     c1:comments? 
     whitespace* 
     mr:(m:movetext whitespace+ r:result {return [m, r]} / r:result {return [null, r]}) 
-    whitespace* {return make_game(c0, h, c1, mr[0], mr[1])}
+    whitespace* {return make_game(c0, h, c1, mr[0], mr[1], gm )}
 
 EOF = !.
 escape = "\\"
